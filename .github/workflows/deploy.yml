@@ -1,0 +1,37 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  # ─── Lint & Type Check ──────────────────────────────────
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Type check API
+        run: cd apps/api && pnpm exec tsc --noEmit
+
+      - name: Type check Web
+        run: cd apps/web && pnpm exec tsc --noEmit
+
+  # ─── Deploy Frontend → Vercel (automatique via intégration GitHub) ──
+  # Vercel déploie automatiquement via son intégration GitHub
+  # Pas besoin d'un job ici
+
+  # ─── Deploy Backend → Railway (automatique via intégration GitHub) ──
+  # Railway déploie automatiquement via son intégration GitHub
+  # Pas besoin d'un job ici non plus

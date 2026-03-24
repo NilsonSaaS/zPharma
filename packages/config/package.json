@@ -1,0 +1,6 @@
+{
+  "name": "@pharmapersonal/config",
+  "version": "0.1.0",
+  "main": "./constants.ts",
+  "types": "./constants.ts"
+}
